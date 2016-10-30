@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1: #2}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}}
+\newcommand\algo{\vspace{.10in}\textbf{Algorithm: }}
+\newcommand\correctness{\vspace{.10in}\textbf{Correctness: }}
+\newcommand\runtime{\vspace{.10in}\textbf{Running time: }}
+\newcommand\pseudoCode{\vspace{.10in}\textbf{PseudoCode: }}
+\newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}
+\newcommand*{\comb}[2]{{}^{#1}\!C_{#2}}
+%\pagestyle{fancyplain}
+%\lhead{\textbf{\NAME\ (\UID)}}
+%\chead{\textbf{Hw\HWNUM}}
+%\rhead{CS 6350, \today}
+\title{CS6150 - Homework/Assignment-4}
+\author{Arnab Das(u1014840)}
+\usepackage[utf8]{inputenc}
+\begin{document}
+  \pagenumbering{gobble}
+  \maketitle
+  \newpage
+  \pagenumbering{arabic}
+  \newcommand\NAME{ARNAB DAS}
+  \newcommand\UID{uxxxxxxx}
+  \newcommand\HWNUM{4}
+  
+  %%---------- Question-1 -----------------
+  \question{1}{PAC-Learning}
+  \part{1.a} Rule-1 states that you are free to combine any of the parts as they are. Given, there are N available parts, then for every part there are two options - either the part is chosen or it is discarded. It is analogous to a N-bit vector, where each part corresponds to a bit in the vector. The decision of choosing the part can be thought of as setting 1 to that bit position while the choice of discarding a part is equivalent to seeting 0 to that bit position. For such a set-up the size of the hypotheses space is equal to the possible numbers that the n-bit vector can accomodate. Hence,\newline
+  \hspace*{0.5cm} Size of hypotheses space by Rule-1 = $2^N$ (Answer). \newline
+  
+  \part{1.b} Here both Rule-1 and Rule-2 are followed. Rule-2 suggests that the original parts are allowed to be broken into two distinct pieces before using. Thus, in combination of Rule-1 and Rule-2, there will be now four choices for every part, that is , the part is not chosen, or the part is chosen as original without cut, or the part is cut and the first piece is chosen, or the part is cut and the second piece is chosen. For the analogy of the n-bit vector, each bit can now take 4 values instead of just two. Hence, \newline
+  \hspace*{0.5cm} Size of hypotheses space by Rule-2 = $4^N$ (Answer). \newline
+  
+  \part{1.c} Number of available parts = 6. Hence, N = 6. \newline
+  \hspace*{0.5cm} Size of hypotheses space = $|H|$ = $4^6$ \newline
+  The allowed error,  $\epsilon$ = 0.01 \newline
+  Given, the probability with which the robot wants to predict correctly within $\epsilon$ is 99\%. Then $(1-\delta)$ = 0.99. \newline
+  \hspace*{0.5cm} Then, $\delta = $ 1 - 0.99 = 0.01 \newline
+  Note that, in this case the learning is not agnostic, since the true concept is contained in the hypotheses space. Hence, we need to use the non-agnostic learning formula for finding the lower bound on the number of examples: \newline
+  
+  \begin{equation}
+    m > \dfrac{1}{\epsilon}\bigg (  ln(|H|) + ln(\dfrac{1}{\delta})\bigg)
+  \end{equation}
+  Plugging in the values for $|H|, \epsilon , \delta$ we get the value of m as: \newline
+  \[ m > 1292.293 \]
+  Rounding off to the ceil:
+  \[  m > 1293 \]
+  (Answer)
+  
+  \part{2}
+  Suppose H denotes the hypotheses space. Consider a hypothesis h $\in$ H. Let us define a random Variable `X' , such that:
+  \[ X = 0 ; h(x)=c(x) \]
+  \[ X = 1 ; h(x) \neq c(x) \]
+  where x belongs to the distribution D over which the instance space is defined, and c the target concept. \newline
+  If we select `m' random independent examples from the distribution D and the mark the outcomes as $X_{1},X_{2},\dots,X_{m}$, then $\dfrac{\sum X_{i}}{m}$ denotes the error fraction over the sample space. The \textbf {training error}, $error_{s}(h)$, is defines as the fraction of the training examples misclassified by the hypothesis h. Hence, \newline
+  \begin{equation}
+  error_{s}(h) = \dfrac{\sum X_{i}}{m}
+  \end{equation}
+  
+  The \text {true error, or generalization error}, $error_{D}$ over the entire distribution D from which the examples are randomly drawn is defined as \newline
+  \[ error_{D}(h) \equiv  \underset{x \in D}{P} [c(x) \neq h(x)]\]
+    
+    The expected value of a discrete random variable, is the probability weighted average of all possible values, that is over the entire distribution. Hence, the from the above definition of $error_{D}$, we can say it is the expected value of $error_{s}$, the training error.\newline
+    
+    For PAC learnability, we would like that the true error is not worse than $\epsilon$ plus the training error. Then we can characterize the event $(error_{D} - error_{s} > \epsilon)$ as a bad event and would like the probability of such an event be upperbounded by a small probability $\delta$. We can write the probability of the above event as following: \newline
+    \[P[error_{D} > error_{s} + \epsilon]\]
+    In this problem, we are given that the error term is a multiplicative terms relative to the training error, that is true error is no worse than  $(1 + \epsilon)error_{s}$. Then we can write the above as:
+    \[P[error_{D} - (1+\epsilon)error_{s} > 0]\]
+    Rearranging the terms:
+    \[ P[error_{D} > (1+\epsilon)error_{s} ]\]
+    \[ P[\dfrac{1}{1 + \epsilon}error_{D} > error_{s} ]\]
+    \begin{equation}
+     P\bigg [  error_{D}\bigg (  1 - \dfrac{\epsilon}{1 + \epsilon}  \bigg ) > error_{s}  \bigg ]
+    \end{equation}
+    
+    Recalling the Chernoff bound, where for $X_{1},X_{2},\dots,X_{m}$ being the outcomes of m independent trials, and the probability of a $P[X_{i}=1]=p$ and $P[X_{i} = 0]=(1-p)$, then the expectation $E\bigg [  \dfrac{\sum X_{i}}{m}\bigg ]$=p, and the chernoff bound governs the probability that $\dfrac{\sum X_{i}}{m}$ will differ from p by some factor $0 < \gamma < 1$, as:
+    \[ P\bigg [ \dfrac{\sum X_{i}}{m} > (1+\gamma)p \bigg ] \leq \exp(\dfrac{-mp\gamma^2}{3})\]
+        \[ P\bigg [ \dfrac{\sum X_{i}}{m} < (1-\gamma)p \bigg ] \leq \exp(\dfrac{-mp\gamma^2}{2})\]
+    
+    Recalling equation(2) and the definition of true error, we see that equation(3) is in exact formation of the second chernoff bound described above such that \newline 
+    $p=error_{D}$ and $\gamma = \dfrac{\epsilon}{1 + \epsilon}$. Since $0 < \epsilon < 1$, then $ 0 < \gamma < 1 $, which satisfies the condition on the form factor of the Chernoff bound. Thus, using the second chernoff bound in our problem, we get:
+    \begin{equation}
+    P\bigg [  error_{D}\bigg (  1 - \dfrac{\epsilon}{1 + \epsilon}  \bigg ) > error_{s}  \bigg ] \leq \exp(\dfrac{-m.error_{D}.\bigg (\dfrac{\epsilon}{1 + \epsilon}\bigg )^2}{2})
+    \end{equation}
+    
+    The above was determined for a single hypethesis $h \in H$. For the entire hypotheses space the above equation has to be adjusted to :
+    
+    \begin{equation}
+    P\bigg [  error_{D}\bigg (  1 - \dfrac{\epsilon}{1 + \epsilon}  \bigg ) > error_{s}  \bigg ] \leq |H|\exp \bigg (\dfrac{-m.error_{D}.\bigg (\dfrac{\epsilon}{1 + \epsilon}\bigg )^2}{2}\bigg )
+    \end{equation}
+    
+    We use the result of equation(5) to determine the number of training examples required to reduce this probability of failure below a desired level of $\delta$. Hence: \newline
+    \[ |H|\exp \bigg (\dfrac{-m.error_{D}.\bigg (\dfrac{\epsilon}{1 + \epsilon}\bigg )^2}{2}\bigg ) \leq \delta \]
+    
+    Taking natural logarithms on both sides and reaarnging the terms to single out m(number of examples for training), we get: \newline
+    \begin{equation}
+      m \geq \dfrac{2(1 + \epsilon)^2}{\epsilon^2 . error_{D}}\bigg (  ln|H| + ln|\dfrac{1}{\delta}| \bigg )
+    \end{equation}
+    
+    (Answer).
+  
+
+
+
+\end{document} 
