@@ -20,7 +20,7 @@
 %\lhead{\textbf{\NAME\ (\UID)}}
 %\chead{\textbf{Hw\HWNUM}}
 %\rhead{CS 6350, \today}
-\title{CS6150 - Homework/Assignment-4}
+\title{CS6350 - Homework/Assignment-4}
 \author{Arnab Das(u1014840)}
 \usepackage[utf8]{inputenc}
 \begin{document}
@@ -108,7 +108,38 @@
     
     (Answer).
   
+  \question{2}{VC Dimensions}
+  \part{1}
+  
+  \part{2.a} 
+    $H_{=k}^X$ = ${h \in {0,1}^X : |{x:h(x)=1}| = k}$
+    that is, the set of all functions that assign the value 1 to exactly k elements.
+    Consider 1 sample point. The adversary can mark this point as a `1' label or a `0'. The class defintiion says that for a given fixed `k', the hypotheses contained in this space are the ones that mark exactly k points as 1. Suppose k=1. The possible dichotomies of a single point is two, that is either the point is labeled as 1 or labeled as 0. Then, for k=1, it works for the dichotomy where the label is 1, but for label 0, it does not have a hypotheses in this class. The class for k=0, has a hypotheses for label=0, but it doesn't havs a hypotheses for the label being 1. Thus, for a specific fixed k, it cannot shatter a single point. Hence, \textbf { VC dimension of this class is 0}. (answer) \newline
+    
+    \part{2.b}
+    $H_{\leq k}^X$ = ${ h \in {0,1}^X : |{x:h(x)=1}| \leq k or |{x:h(x)=0}| \leq k}$ \newline
+    That is a class of functions for a given fixed k, there exists hypothesis that can label atmost k elements as 1 or a 0. Let us consider a few rudimentary cases to identify the formal pattern: \newline
+    \textbf {case-1: single point - }  If this point is labeled 0, then there exists a $h \in H_{1}$ that can label a single point as 0, due to the fact $|{x:h(x)=0}| \leq 1$, and holds true for all $k \geq 1$. \newline
+    If this point is labeled 1, then also there exists a $h \in H_{1}$ that can label a single point as 1 due to the fact $|{x:h(x)=1}| \leq 1$, and holds true for all $k \geq 1$. \newline
+    \textbf {case-2: 2 points - } Consider 2 points. 2 points can have the following 4 labels: (0,0), (0,1), (1,0) and (1,1). In all 4 cases the $|x=1|$ is atmost 2, and hence satisfied by $h \in H_{2}:|x:h(x)=1| \leq 2$ and also $|x=0|$ is atmost 2 and hence satisfied by $h \in H_{2}:|x:h(x)=0| \leq 2$. \newline
+    As the pattern is very evident that if the number of points, n, is less than or equal to k, then $H_{\leq k}^X$ can shatter the points.  \newline
+    Now let us consider, that the number of points n is greater than k, say k+1, for a given fixed k. There exists a labelling where all the points are labelled as 1, such that $|x=1|$ = k+1. But the hypotheses class we have has hypothesis that can label \textbf {atmost} k points as 1. Hence, in this case we have a breakpoint and so the (k+1)  points cannot be shattered. \newline
+    Hence, \textbf {VC dimension is k}. (answer) \newline
 
+	\part{3} Instance space consisting of real numbers and a hypothesis space $H$ consisting of two disjoint intervals, defined by $[a,b]$ and $[c,d]$. \newline
+  \begin{figure}[h!]
+   \centering
+  \includegraphics[width=25cm, height=20cm]{Prob3}
+  \caption{Shattering of real number instance  space by two disjoint intervals}
+  \end{figure}
+  In figure-1, we describe the possible shatterings of set of points on the real number line. For 5 points we can show a labelling, where two disjoint intervals cannot shatter the set of points.Hence, \textbf {VC dimension is 4} . (Answer). \newline
+  
+
+  
+  
+	
+    
+    
 
 
 \end{document} 
