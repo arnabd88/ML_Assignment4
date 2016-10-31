@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
 \usepackage{fancyhdr}
+\usepackage{float}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt plus 1pt}
 \setlength{\headheight}{13.6pt}
@@ -130,18 +131,19 @@
     Now let us consider, that the number of points n is greater than k, say k+1, for a given fixed k. There exists a labelling where all the points are labelled as 1, such that $|x=1|$ = k+1. But the hypotheses class we have has hypothesis that can label \textbf {atmost} k points as 1. Hence, in this case we have a breakpoint and so the (k+1)  points cannot be shattered. \newline
     Hence, \textbf {VC dimension is k}. (answer) \newline
 
-	\part{3} Instance space consisting of real numbers and a hypothesis space $H$ consisting of two disjoint intervals, defined by $[a,b]$ and $[c,d]$. \newline
-  \begin{figure}[h!]
+  \part{3}
+  \begin{figure}[H]
    \centering
-  \includegraphics[width=25cm, height=20cm]{Prob3}
+  \includegraphics[width=25cm, height=16cm]{Prob3}
   \caption{Shattering of real number instance  space by two disjoint intervals}
   \end{figure}
+  Instance space consisting of real numbers and a hypothesis space $H$ consisting of two disjoint intervals, defined by $[a,b]$ and $[c,d]$. \newline
   In figure-1, we describe the possible shatterings of set of points on the real number line. For 5 points we can show a labelling, where two disjoint intervals cannot shatter the set of points.Hence, \textbf {VC dimension is 4} . (Answer). \newline
 
 
   \part{4}
   Each example point in $R^2$ . A function $h \in H$, where H is the concept class, is specified by 2 parameters a and b. An example ${x_{1}, x_{2}}$ is labeled '+' if and only if $x_{1} + x_{2} \geq a$ and $x_{1} - x_{2} \leq b$, else labeled as '-'. So, it looks like the figure-2,  \newline
-  \begin{figure}[h!]
+  \begin{figure}[H]
    \centering
   \includegraphics[width=14cm, height=8cm]{Prob4}
   \caption{Description of the function space}
