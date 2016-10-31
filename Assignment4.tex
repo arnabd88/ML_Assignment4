@@ -133,6 +133,26 @@
   \caption{Shattering of real number instance  space by two disjoint intervals}
   \end{figure}
   In figure-1, we describe the possible shatterings of set of points on the real number line. For 5 points we can show a labelling, where two disjoint intervals cannot shatter the set of points.Hence, \textbf {VC dimension is 4} . (Answer). \newline
+
+
+  \part{4}
+  Each example point in $R^2$ . A function $h \in H$, where H is the concept class, is specified by 2 parameters a and b. An example ${x_{1}, x_{2}}$ is labeled '+' if and only if $x_{1} + x_{2} \geq a$ and $x_{1} - x_{2} \leq b$, else labeled as '-'. So, it looks like the figure-2,  \newline
+  \begin{figure}[h!]
+   \centering
+  \includegraphics[width=14cm, height=8cm]{Prob4}
+  \caption{Description of the function space}
+  \end{figure}
+  Fig-2(a), shows how the h changes with varying a and b. Note that $x_{1} + x_{2} = a$ and $x_{1} - x_{2} = b$ are perpendicular to each other. Hence, as we vary a and b, the lines do not rotate, but only move in parallel. Thus, all the functions correspond to fig2(b), that is a 45 degree axes rotated 4 quadrant structure, and that can be formed in any part of $R^2$ , with varying a and b. We have the quadrants as 1,2,3,4 for ease of explanation later. \newline
+  Now, let us consider case by case for varying set of points. \newline
+  \textbf {Case-1: Single Point - } A single point is fairly obvious that it can be shattered. If it is labeled `-', then we can always find pair of (a,b) such that the point falls in one of 2,3,4 quadrants. If it is marked as `+', then as well we can find a pair (a,b) such that the point falls in the 1 quadrant. \newline
+  \textbf {Case-2: 2 points - } Figure(3) shows the set of two points that can be shattered with this hypotheses space. \newline
+  \begin{figure}[h!]
+   \centering
+  \includegraphics[width=10cm, height=7cm]{Prob4a}
+  \caption{Shattering two points}
+  \end{figure}
+  Fig(3)a shows for two points labeled (+,+) we can have a pair of (a,b) such that they lie in quadrant-1 of the 45 degree rotated 4 quadrant structure. Fig-3(b) analyses the case where labeling is (+,-). We show how the lines of 3(a) can be parallel shifted as the \textbf {blue} lines, to satisfy this labeling. Similarly, we show for the labelings of (-,+) and (-,-) in 3(c) and 3(d) respectively. Thus 2 points can be shattereds for this class. \newline
+
   
 
   
