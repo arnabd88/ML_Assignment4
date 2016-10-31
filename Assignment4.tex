@@ -38,7 +38,7 @@
   \hspace*{0.5cm} Size of hypotheses space by Rule-1 = $2^N$ (Answer). \newline
   
   \part{1.b} Here both Rule-1 and Rule-2 are followed. Rule-2 suggests that the original parts are allowed to be broken into two distinct pieces before using. Thus, in combination of Rule-1 and Rule-2, there will be now four choices for every part, that is , the part is not chosen, or the part is chosen as original without cut, or the part is cut and the first piece is chosen, or the part is cut and the second piece is chosen. For the analogy of the n-bit vector, each bit can now take 4 values instead of just two. Hence, \newline
-  \hspace*{0.5cm} Size of hypotheses space by Rule-2 = $4^N$ (Answer). \newline
+  \hspace*{0.5cm} Size of hypotheses space by Rule-1 and 2 = $4^N$ (Answer). \newline
   
   \part{1.c} Number of available parts = 6. Hence, N = 6. \newline
   \hspace*{0.5cm} Size of hypotheses space = $|H|$ = $4^6$ \newline
@@ -109,7 +109,11 @@
     (Answer).
   
   \question{2}{VC Dimensions}
-  \part{1}
+  \part{1} Suppose we have a finite hypotheses space C. Let the instance space be 'X"  and the VC(C) defined over the space 'X" is n. This implies that C is able to shatter atmost a subset of n instances out of 'X'. To shatter n instances, the number oof hypotheses required will be atleast $2^n$. Hence, \newline
+  \[|C| \geq 2^n\]
+  \[=> \log_{2}|C| \geq n \times \log_{2}2\]
+  \[=> n \leq \log_{2}|C| \]
+  Hence, VC(C) $\leq \log_{2}|C|$ (Proved). \newline
   
   \part{2.a} 
     $H_{=k}^X$ = ${h \in {0,1}^X : |{x:h(x)=1}| = k}$
@@ -152,6 +156,27 @@
   \caption{Shattering two points}
   \end{figure}
   Fig(3)a shows for two points labeled (+,+) we can have a pair of (a,b) such that they lie in quadrant-1 of the 45 degree rotated 4 quadrant structure. Fig-3(b) analyses the case where labeling is (+,-). We show how the lines of 3(a) can be parallel shifted as the \textbf {blue} lines, to satisfy this labeling. Similarly, we show for the labelings of (-,+) and (-,-) in 3(c) and 3(d) respectively. Thus 2 points can be shattereds for this class. \newline
+
+   \textbf {Case-3: 3 points -} Here, we strive to explain the different geomtries in which the points can be placed from the perspective of our hypothesis space. Figure(4) shows the different geomtries. The geometries that are symmetrical with respect to our hypetheses space are grouped together and only one of them will be considered. \newline
+  \begin{figure}[h!]
+   \centering
+  \includegraphics[width=10cm, height=7cm]{Prob4b}
+  \caption{Possible geometries of 3 points}
+  \end{figure}
+
+  In Figure(4) we show the counter-examples for all these geometries. \newline
+  \begin{figure}[h!]
+   \centering
+  \includegraphics[width=15cm, height=10cm]{Prob4c}
+  \caption{Counter Examples for each geometry of 3 points}
+  \end{figure}
+  For \textbf {geometry-1}, since the '-' labeled point is above the two '+' labeled points and midway along x1 for the '+' labeled points, hence the given labeling for geometry-1 is not satisfiable by any $h \in H$. \newline
+  For \textbf {geometry-2}, For this setting we show two different labelings that cannot be simultaneously true. Since, every hypothesos with (a,b) are correspondingly parallel, this given pair of labelling violates it. \newline
+  For \textbf {geometry-3}, Similarly, here also we show two labelling , that will conflict. \newline
+  For \textbf {geometry-4,5,6,7}, For geometry 4,5,6,7, we show labellings, which does not have a feasible hypothesis, since the convex region of '+' will contain the '-' labeled point, contradicting the hypotheses space definition. \newline
+  For \textbf {geometry-8,9,10}, Geometry-8,9,10 covers the colinear points where again we again give counter examples labeling that is not satisfiable by any of the hypotheses. Basically, for colinear points, if the non-adjacent points are oppositely labeled, then it is not satisfiable. \newline
+
+  Since, we get breakpoint for 3 points, hence \textbf {VC dimension is 2}.(Answer)\newline
 
   
 
