@@ -6,6 +6,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{fancyhdr}
 \usepackage{float}
+\usepackage{longtable}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt plus 1pt}
 \setlength{\headheight}{13.6pt}
@@ -117,9 +118,15 @@
   Hence, VC(C) $\leq \log_{2}|C|$ (Proved). \newline
   
   \part{2.a} 
-    $H_{=k}^X$ = ${h \in {0,1}^X : |{x:h(x)=1}| = k}$
-    that is, the set of all functions that assign the value 1 to exactly k elements.
-    Consider 1 sample point. The adversary can mark this point as a `1' label or a `0'. The class defintiion says that for a given fixed `k', the hypotheses contained in this space are the ones that mark exactly k points as 1. Suppose k=1. The possible dichotomies of a single point is two, that is either the point is labeled as 1 or labeled as 0. Then, for k=1, it works for the dichotomy where the label is 1, but for label 0, it does not have a hypotheses in this class. The class for k=0, has a hypotheses for label=0, but it doesn't havs a hypotheses for the label being 1. Thus, for a specific fixed k, it cannot shatter a single point. Hence, \textbf { VC dimension of this class is 0}. (answer) \newline
+    $H_{=k}^X$ = ${h \in {0,1}^X : |{x:h(x)=1}| = k}$ \newline
+    It has two cases, analyzed below. \newline
+    case-1: Suppose, your current set of instance is of size $n$ and there are $(k-1)$ remaining points in the in the instance space. To meet the criterian, that the hypotheses class requires exactly 'k' elements to be labeled as '1', we can mark the 'k-1' points as '1', but still require 1 more point from the current set of instances under analysis. However, this set can have a all 0 labeling required to be satisfied, which will not be satisfied by the hypotheses class. In this case thus $n = |X| - (k-1)$ . \newline
+    case-2: Suppose you have (k+1) points under consideration in your subset of instances, then for the labeling of all 1's , we are have one more point to satisfy than sypported by the hypotheses class. In this case thus $n = k+1$. \newline
+    Thus for a finite instance space, the VC dimension will be 1 less than the minima of the n's described above. Hence: \newline
+    \[ VC = min(|X| - (k-1) , k+1) - 1\]
+    (Answer).
+
+
     
     \part{2.b}
     $H_{\leq k}^X$ = ${ h \in {0,1}^X : |{x:h(x)=1}| \leq k or |{x:h(x)=0}| \leq k}$ \newline
@@ -180,7 +187,114 @@
 
   Since, we get breakpoint for 3 points, hence \textbf {VC dimension is 2}.(Answer)\newline
 
-  
+ \part{5} 
+ Let two hypothesis classes $H_{1}$ and $H_{2}$ satisfy $H_{1} \subseteq H_{2}$. \newline
+ Suppose we find a set of instances of size $d_{1}$ that $H_{1}$ is able to shatter and a size $d_{2}=d_{1}+1$, that $H_{1}$ cannot shatter. Then \newline
+ \[ d1 \leq VC(H1) < d2 \]
+ Hence,
+\[ VC(H1) = d1 \]
+ Since , $H_{1} \subseteq H_{2}$, we can write:  $H_{2} = H_{1} \cup \delta h$. \newline
+ Since, $H_{2}$ contains all the hypotheses of $H_{1}$, so $H_{2}$ can \textbf {atleast} shatter the subset of instances that $H_{1}$ was able to shatter. Hence, for d1 set of instances, $H_{2}$ will be able to shatter using the same set of hypotheses $H_{1}$ had to shatter $d_{1}$. Hence: \newline
+ \[ VC(H_{2}) \geq d1 = VC(H_{1}) \]
+ \begin{equation}
+  VC(H_{2}) \geq VC(H_{1})
+ \end{equation}
+ (Proved).\newline
+
+
+ \question{3}{AdaBoost}
+ Using the formulae: \newline
+ (1) $\epsilon_{t} = \dfrac{1}{2} - \dfrac{1}{2}(\sum_{i=1}^m D_{t}(i)y_{i}h(x_{i}))$ \newline
+ (2) $D_{t+1}(i) = \dfrac{D_{t}(i)}{z_{t}}\exp(-\alpha_{t}y_{i}h_{t}(x_{i}))$ \newline
+ (3) $\alpha_{t} = ln(\dfrac{1-\epsilon_{t}}{\epsilon_{t}})$ \newline
+ \textbf {Given for first iteration}: \newline
+ h = $h_{a}(x)$ = sgn($x_{1}$), $\epsilon_{1}=1/4$, $\alpha_{1}=\dfrac{ln3}{2}$ \newline
+ Initialize $D_{1}$ = $\bigg ( \dfrac{1}{4}, \dfrac{1}{4}, \dfrac{1}{4}, \dfrac{1}{4},\bigg )$ \newline
+ Evaluating $D_{2}^\prime (without-normalization)$ = $\bigg ( \dfrac{\sqrt[2]{3}}{4}, \dfrac{1}{4\sqrt[2]{3}}, \dfrac{1}{4\sqrt[2]{3}}, \dfrac{1}{4\sqrt[2]{3}} \bigg )$ \newline
+ $Z_{1}$ = $\sum_{i=1}^4 D_{2}^\prime(i)$ = $\dfrac{\sqrt[2]{3}}{2}$ \newline
+ Hence, Normalized $D_{2}$ = $\bigg ( \dfrac{1}{2}, \dfrac{1}{6}, \dfrac{1}{6}, \dfrac{1}{6} \bigg )$ \newline
+ \textbf {Starting second iteration} \newline
+ \textbf {Evaluating $\epsilon$ corresponding to the remaining hypotheses} \newline
+ $\epsilon_{2,h_{b}}$ = $\dfrac{1}{6}$ \newline
+ $\epsilon_{2,h_{c}}$ = $\dfrac{1}{2}$ \newline
+ $\epsilon_{2,h_{d}}$ = $\dfrac{1}{6}$ \newline
+ Since both $\epsilon_{2,h_{b}}$ and $\epsilon_{2,h_{d}}$ are lowest and better than chance, we can pick any of $h_{b}$ or $h_{d}$ . So Choosing $h_{b}$ for round 2, we evaluate $\alpha_{2} = \dfrac{ln5}{2}$ \newline
+ Hence the data for Round-2 is: \newline
+ h = $h_{b}$ = sgn(x-2) ; $\epsilon_{2} = \epsilon_{2,h_{b}} = \dfrac{1}{6}$,  $D_{2}$ = $\bigg ( \dfrac{1}{2}, \dfrac{1}{6}, \dfrac{1}{6}, \dfrac{1}{6} \bigg )$ \newline
+ Evaluating $D_{3}^\prime(without-normalization)$ = $\bigg (  \dfrac{1}{2\sqrt[2]{5}}, \dfrac{\sqrt[2]{5}}{6}, \dfrac{1}{6\sqrt[2]{5}}, \dfrac{1}{6\sqrt[2]{5}}  \bigg )$ \newline
+ $Z_{2}$ = $\dfrac{\sqrt[2]{5}}{3}$ \newline
+ Hence, Normalized $D_{3}$ = $\bigg (  \dfrac{3}{10}, \dfrac{1}{2} , \dfrac{1}{10}, \dfrac{1}{10} \bigg )$ \newline
+ \textbf {Starting third iteration} \newline
+ \textbf {Evaluating $\epsilon$ corresponding to the remaining hypotheses} \newline
+ $\epsilon_{3,h_{c}} = \dfrac{7}{10}$ \newline
+ $\epsilon_{3,h_{d}} = \dfrac{1}{10}$ \newline
+ Since $\epsilon_{3,h_{d}}$ is lowest and better than chance, hence choosing $h_{d}$ for round 3, and evaluating $\alpha_{3} = ln(3)$ \newline
+ Hence, the data for Round-3 is: \newline
+ h = $h_{d}$ = $-sgn(x_{2})$ ; $\epsilon_{3} = \epsilon_{3,h_{d}} = \dfrac{1}{10}$, $D_{3}$ = $\bigg (  \dfrac{3}{10}, \dfrac{1}{2} , \dfrac{1}{10}, \dfrac{1}{10} \bigg )$ \newline
+ Evaluating $D_{4}^\prime(without-normalization)$ = $\bigg ( \dfrac{1}{10}, \dfrac{1}{6}, \dfrac{3}{10}, \dfrac{1}{30} \bigg )$ \newline
+ $Z_{3}$ = $\dfrac{3}{5}$ \newline
+ Hence, Normalized $D_{4}$ = $\bigg ( \dfrac{1}{6} , \dfrac{5}{18}, \dfrac{1}{2}, \dfrac{1}{18} \bigg )$ \newline
+ \textbf {Starting fourth iteration} \newline
+ \textbf {Evaluating $\epsilon$ corresponding to the remaining hypotheses} \newline
+ $\epsilon_{4,h_{c}} = \dfrac{5}{6}$ \newline
+ Since, $\epsilon_{4,h_{c}}$ is worse than chance, we \textbf {discard this hypotheses $h_{d}$}. \newline
+ Hence, our final combined function is :\newline
+ \begin{equation}
+    H_{final} = sgn( (ln(\sqrt[2]{3}))sgn(x_{1}) + (ln(\sqrt[2]{5}))sgn(x-2) - (ln3)sgn(x_{2}))
+ \end{equation}
+ The final table is given in Table-2: \newline
+
+\begin{longtable}{c|c|c|c|c}
+	\caption{Table-Round1: $h_{a}(x), \epsilon_{1} = \dfrac{1}{4}, \alpha_{1}=\dfrac{ln3}{2}, Z_{1} = \dfrac{\sqrt[2]{3}}{2}$} \\
+  %\centering
+  %\begin{tabular}{c c  c c c c}
+  \hline\hline
+	  $X=[x_{1},x_{2}]$ & $y_{i}$ & $D_{1}$ & $D_{1}(i)y_{i}h_{t}(x_{i})$ & $D_{2}$ \\[0.5ex]
+  \hline
+  (1,-1) & -1 & $\dfrac{1}{4}$ & $-\dfrac{1}{4}$ & $\dfrac{1}{2}$ \\
+  (1,-1) & +1 & $\dfrac{1}{4}$ & $\dfrac{1}{4}$ & $\dfrac{1}{6}$ \\
+  (-1,-1) & -1 & $\dfrac{1}{4}$ & $\dfrac{1}{4}$ & $\dfrac{1}{6}$ \\
+	  (-1,1) & -1 & $\dfrac{1}{4}$ & $\dfrac{1}{4}$ & $\dfrac{1}{6}$ \\ [0.5ex]
+  %1 & 3 & -4.002588
+  %\end{tabular}
+  %\label{table:nonlin}
+  \end{longtable}
+
+\begin{longtable}{c|c|c|c|c}
+	\caption{Table-Round2: $h_{b}(x), \epsilon_{2} = \dfrac{1}{6}, \alpha_{2}=\dfrac{ln5}{2}, Z_{2} = \dfrac{\sqrt[2]{5}}{3}$} \\
+  %\centering
+  %\begin{tabular}{c c  c c c c}
+  \hline\hline
+	  $X=[x_{1},x_{2}]$ & $y_{i}$ & $D_{2}$ & $D_{2}(i)y_{i}h_{t}(x_{i})$ & $D_{3}$ \\[0.5ex]
+  \hline
+ 	  (1,-1) & -1 & $\dfrac{1}{2}$ & $\dfrac{1}{2}$ & $\dfrac{3}{10}$ \\
+	  (1,-1) & +1 & $\dfrac{1}{6}$ & $\dfrac{-1}{6}$ & $\dfrac{1}{2}$ \\
+	  (-1,-1) & -1 & $\dfrac{1}{6}$ & $\dfrac{1}{6}$ & $\dfrac{1}{10}$ \\
+	  (-1,1) & -1 & $\dfrac{1}{6}$ & $\dfrac{1}{6}$ & $\dfrac{1}{10}$ \\[0.5ex]
+  %1 & 3 & -4.002588
+  %\end{tabular}
+  %\label{table:nonlin}
+  \end{longtable}
+
+\begin{longtable}{c|c|c|c|c}
+	\caption{Table-Round3: $h_{d}(x), \epsilon_{3} = \dfrac{1}{10}, \alpha_{3}=ln3, Z_{3} = \dfrac{3}{5}$} \\
+  %\centering
+  %\begin{tabular}{c c  c c c c}
+  \hline\hline
+	  $X=[x_{1},x_{2}]$ & $y_{i}$ & $D_{3}$ & $D_{3}(i)y_{i}h_{t}(x_{i})$ & $D_{4}$ \\[0.5ex]
+  \hline
+	  (1,-1) & -1 & $\dfrac{3}{10}$ & $\dfrac{3}{10}$ & $\dfrac{1}{6}$\\
+	  (1,-1) & +1 & $\dfrac{1}{2}$ & $\dfrac{1}{2}$ & $\dfrac{5}{18}$\\
+	  (-1,-1) & -1 & $\dfrac{1}{10}$ & $\dfrac{-1}{10}$ & $\dfrac{1}{2}$\\
+	  (-1,1) & -1 & $\dfrac{1}{10}$ & $\dfrac{1}{10}$ & $\dfrac{1}{18}$ \\[0.5ex]
+  %1 & 3 & -4.002588
+  %\end{tabular}
+  %\label{table:nonlin}
+  \end{longtable}
+
+  $\epsilon_{4,h_{c}}$ = $\dfrac{5}{6}$, worse than chance, hence discarded. \newline
+  \textbf {Final Hypothesis}, $H_{final}(x) =  sgn( (ln(\sqrt[2]{3}))sgn(x_{1}) + (ln(\sqrt[2]{5}))sgn(x-2) - (ln3)sgn(x_{2}))$ (Answer).
+
 
   
   
