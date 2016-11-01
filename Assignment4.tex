@@ -119,9 +119,12 @@
   
   \part{2.a} 
     $H_{=k}^X$ = ${h \in {0,1}^X : |{x:h(x)=1}| = k}$ . It has two cases, analyzed below. \newline
-    \textbf {case-1}: Suppose, your current set of instance is of size $n$ and there are $(k-1)$ remaining points in the instance space. To meet the criterian, that the hypotheses class requires exactly 'k' elements to be labeled as '1', we can mark the 'k-1' points as '1', but still require 1 more point from the current set of instances under analysis. However, this set can have an all 0 labeling required to be satisfied, which will not be satisfied by the hypotheses class. In this case thus $n = |X| - (k-1)$ . \newline
-    \textbf {case-2}: Suppose you have (k+1) points under consideration in your subset of instances, then for the labeling of all 1's , we have one more point to satisfy than supported by the hypotheses class. In this case thus $n = k+1$. Thus for a finite instance space, the VC dimension will be 1 less than the minima of the n's described above. Hence: \newline
-    \[ VC = min(|X| - (k-1) , k+1) - 1\]
+    \textbf {case-1}: Suppose, your current set of instance is of size $n$ and there are $(k-1)$ remaining points in the instance space. To meet the criterian, that the hypotheses class requires exactly 'k' elements to be labeled as '1', we can mark the 'k-1' points as '1', but still require 1 more point from the current set of instances under analysis. However, this set can have an all 0 labeling required to be satisfied, which will not be satisfied by the hypotheses class. In this case thus $n = |X| - (k-1)$ . If we consider, the remaining points were greater than equal to k, in that case, for the extreme labelings of the set of instances, we can always fit the exact k points in this remaining part for the all 0 labelling, and in other cases will be able to distribute the exact k 1's amongst all the points such that every label of our current instance set can be satisfied, except in another case disussed in case-2. Thus, the VC is greater than equal to $|X| - k$ \newline
+    \textbf {case-2}: Suppose you have (k+1) points under consideration in your subset of instances, then for the labeling of all 1's , we have one more point to satisfy than supported by the hypotheses class. In this case thus $n = k+1$. \newline
+
+    Thus depending on the distance/difference between $|X|$ and k, either of the cases of case-1 or case-2 will drive the VC dimension. If $|X| >> k$, then the value of k will drive the VC dimension, else if $|X| < 2k+1$ or $|X| - k < k+1$, then $|X|-k$ drives the VC dimension.
+    Thus for a finite instance space, the VC dimension will be 1 less than the minima of the n's described above. Hence: \newline
+    \[ VC = min(|X| - (k) , k)\]
     (Answer).
     
     \part{2.b}
